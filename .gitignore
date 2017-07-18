@@ -1,0 +1,7 @@
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+*.pyc
+*.pyo
+log/
+nvparams.dat
