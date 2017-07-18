@@ -7,7 +7,7 @@ def startup():
 
 def sendAck(addr, command, result):
     rpc(addr, "ack", command, result)
-    print "ack:" + addr_as_text() + "(" + command + ", " + result + ")"
+    print "ack:" + addr_as_text(addr) + "(" + command + ", " + result + ")"
 
 def echo(this):
     addr = rpcSourceAddr()

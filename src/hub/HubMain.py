@@ -14,7 +14,6 @@ def imAliveToHub():
 
 def ackToHub(command, result):
     sensor_id = comm.rpc_source_addr()
-    print "ackToHub", command, result
     log.sensor(sensor_id, "ACK", command, result)
 
 def do_menu():
@@ -46,7 +45,7 @@ def announceHub():
     poll_a_second()
 
 def echo():
-    comm.mcastRpc(1, 2, "echo", 42)
+    comm.mcastRpc(1, 2, "echo", "ping")
     poll_a_second()
 
 def quit():
