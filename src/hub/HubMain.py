@@ -45,7 +45,7 @@ def announceHub():
     poll_a_second()
 
 def echo():
-    comm.mcastRpc(1, 2, "echo", "ping")
+    comm.mcastRpc(1, 2, "echo", 42)
     poll_a_second()
 
 def quit():
