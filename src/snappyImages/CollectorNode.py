@@ -29,17 +29,18 @@ def announceHub():
 def addr_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
 
-def readThreeBytes():
-    global readPending
-    readPending = 10
+def startReading():
+    global reading
+    reading = True
+
+def stopReading():
+    global reading
+    reading = False
 
 @setHook(HOOK_10MS)
 def doEverySec(tick):
-    global readPending
-    if readPending != 0:
-        readPending = readPending - 1
-
-    if readPending == 1:
+    global reading
+    if reading:
         data = snappySpiRead(3, 8)
         print 'SPI read:', addr_as_text(data)
 
