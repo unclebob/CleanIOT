@@ -26,6 +26,7 @@ def addr_as_text(addr):
 
 def readThreeBytes():
     snappySpiInit()
+    snappyADCEnable()
     data = snappySpiRead(3, 8)
     print addr_as_text(data)
     return addr_as_text(data)
