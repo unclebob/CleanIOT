@@ -40,5 +40,6 @@ def doEverySec(tick):
     if readPending:
         data = snappySpiRead(3, 8)
         print 'SPI read:', addr_as_text(data)
+        snappyADCDisable()
 
     readPending = False
