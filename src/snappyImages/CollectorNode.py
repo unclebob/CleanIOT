@@ -1,8 +1,12 @@
 from utils.binhex import hexValues3
 from utils.spi7191 import *
 
+readPending = False
+
 @setHook(HOOK_STARTUP)
 def startup():
+    global readPending
+    readPending = False
     mcastRpc(1,2,"imAlive")
     print "imAlive"
 
@@ -25,9 +29,16 @@ def addr_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
 
 def readThreeBytes():
+    global readPending
     snappySpiInit()
     snappyADCEnable()
-    data = snappySpiRead(3, 8)
-    print addr_as_text(data)
-    return addr_as_text(data)
+    readPending = True
 
+@setHook(HOOK_1S)
+def doEverySec(tick):
+    global readPending
+    if readPending:
+        data = snappySpiRead(3, 8)
+        print addr_as_text(data)
+
+    readPending = False
