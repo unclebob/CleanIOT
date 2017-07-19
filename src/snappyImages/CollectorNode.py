@@ -30,6 +30,8 @@ def addr_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
 
 def startReading():
+    global timer
+    timer = 3
     global reading
     reading = True
 
@@ -40,7 +42,12 @@ def stopReading():
 @setHook(HOOK_10MS)
 def doEverySec(tick):
     global reading
+    global timer
     if reading:
-        data = snappySpiRead(3, 8)
-        print 'SPI read:', addr_as_text(data)
+        if timer == 0:
+            data = snappySpiRead(3, 8)
+            print 'SPI read:', addr_as_text(data)
+            timer = 3
+        else:
+            timer = timer - 1
 
