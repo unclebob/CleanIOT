@@ -20,8 +20,8 @@ def ackToHub(command, result):
 def do_menu():
     options = {
         "1" : enableCollector,
-        # "2" : readAndPrint,
-        # "3" : disableCollector,
+        "2" : readAndPrint,
+        "3" : disableCollector,
         "A" : announceHub,
         "E" : echo,
         "W" : wait_for_replies,
@@ -29,7 +29,7 @@ def do_menu():
         }
 
     while True:
-        prompt1 = "A-announce, E-Echo, W-Wait for replies, Q-Quit:"
+        prompt1 = "1-Enable, 2-Read, 3-Disable ,A-announce, E-Echo, W-Wait for replies, Q-Quit:"
         command = raw_input(prompt1)
         try:
             options[command.upper()]()
@@ -57,6 +57,15 @@ def quit():
 
 def enableCollector():
     comm.mcastRpc(1, 2, "enableCollector")
+    poll_a_second()
+
+def disableCollector():
+    comm.mcastRpc(1, 2, "disableCollector")
+    poll_a_second()
+
+def readAndPrint():
+    comm.mcastRpc(1, 2, "readAndPrint")
+    poll_a_second()
 
 #------- Helpers -----------
 def poll_a_second():

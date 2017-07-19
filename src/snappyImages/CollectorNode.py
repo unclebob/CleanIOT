@@ -13,7 +13,7 @@ def startup():
 
 def sendAck(addr, command, result):
     rpc(addr, "ack", command, result)
-    print "ack:" + addr_as_text(addr) + "(" + command + ", " + result + ")"
+    print "ack:" + three_bytes_as_text(addr) + "(" + command + ", " + result + ")"
 
 def echo(this):
     addr = rpcSourceAddr()
@@ -23,10 +23,10 @@ def echo(this):
 def announceHub():
     command = "announceHub"
     addr = rpcSourceAddr()
-    print command + ": " + addr_as_text(addr)
+    print command + ": " + three_bytes_as_text(addr)
     sendAck(addr, "announceHub", "-")
 
-def addr_as_text(addr):
+def three_bytes_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
 
 def startReading():
@@ -46,7 +46,7 @@ def doEverySec(tick):
     if reading:
         if timer == 0:
             data = snappySpiRead(3, 8)
-            print 'SPI read:', addr_as_text(data)
+            print 'SPI read:', three_bytes_as_text(data)
             timer = 3
         else:
             timer = timer - 1
@@ -56,3 +56,13 @@ def enableCollector():
     addr = rpcSourceAddr()
     sendAck(addr, "enableCollector", "-")
 
+def disableCollector():
+    snappyADCDisable()
+    addr = rpcSourceAddr()
+    sendAck(addr, "disableCollector", "-")
+
+def readAndPrint():
+    addr = rpcSourceAddr()
+    data = snappySpiRead(3, 8)
+    print 'SPI read:', three_bytes_as_text(data)
+    sendAck(addr, "readAndPrint", three_bytes_as_text(data))
