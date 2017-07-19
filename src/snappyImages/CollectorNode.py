@@ -53,4 +53,6 @@ def doEverySec(tick):
 
 def enableCollector():
     snappyADCEnable()
+    addr = rpcSourceAddr()
+    sendAck(addr, "enableCollector", "-")
 
