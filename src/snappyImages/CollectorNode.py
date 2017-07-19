@@ -22,3 +22,10 @@ def announceHub():
 
 def addr_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
+
+def readThreeBytes():
+    snappySpiInit()
+    data = snappySpiRead(3, 8)
+    print addr_as_text(data)
+    return addr_as_text(data)
+
