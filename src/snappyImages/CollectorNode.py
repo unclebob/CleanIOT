@@ -32,14 +32,16 @@ def addr_as_text(addr):
 def readThreeBytes():
     global readPending
     snappyADCEnable()
-    readPending = True
+    readPending = 10
 
-@setHook(HOOK_100MS)
+@setHook(HOOK_10MS)
 def doEverySec(tick):
     global readPending
-    if readPending:
+    if readPending != 0:
+        readPending = readPending - 1
+
+    if readPending == 1:
         data = snappySpiRead(3, 8)
         print 'SPI read:', addr_as_text(data)
         snappyADCDisable()
 
-    readPending = False
