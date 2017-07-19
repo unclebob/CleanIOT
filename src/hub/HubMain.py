@@ -14,10 +14,14 @@ def imAliveToHub():
 
 def ackToHub(command, result):
     sensor_id = comm.rpc_source_addr()
+    print "Ack: ", result
     log.sensor(sensor_id, "ACK", command, result)
 
 def do_menu():
     options = {
+        "1" : enableCollector,
+        # "2" : readAndPrint,
+        # "3" : disableCollector,
         "A" : announceHub,
         "E" : echo,
         "W" : wait_for_replies,
@@ -50,6 +54,9 @@ def echo():
 
 def quit():
     exit(0)
+
+def enableCollector():
+    comm.mcastRpc(1, 2, "enableCollector")
 
 #------- Helpers -----------
 def poll_a_second():

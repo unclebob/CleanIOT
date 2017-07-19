@@ -51,3 +51,6 @@ def doEverySec(tick):
         else:
             timer = timer - 1
 
+def enableCollector():
+    snappyADCEnable()
+
