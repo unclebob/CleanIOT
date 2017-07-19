@@ -34,7 +34,7 @@ def readThreeBytes():
     snappyADCEnable()
     readPending = True
 
-@setHook(HOOK_1MS)
+@setHook(HOOK_10MS)
 def doEverySec(tick):
     global readPending
     if readPending:
