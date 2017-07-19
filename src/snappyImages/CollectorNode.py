@@ -1,4 +1,5 @@
 from utils.binhex import hexValues3
+from utils.spi7191 import *
 
 @setHook(HOOK_STARTUP)
 def startup():
