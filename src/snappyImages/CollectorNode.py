@@ -9,6 +9,7 @@ def startup():
     readPending = False
     mcastRpc(1,2,"imAlive")
     print "imAlive"
+    snappySpiInit()
 
 def sendAck(addr, command, result):
     rpc(addr, "ack", command, result)
@@ -30,7 +31,6 @@ def addr_as_text(addr):
 
 def readThreeBytes():
     global readPending
-    snappySpiInit()
     snappyADCEnable()
     readPending = True
 
@@ -39,6 +39,6 @@ def doEverySec(tick):
     global readPending
     if readPending:
         data = snappySpiRead(3, 8)
-        print addr_as_text(data)
+        print 'SPI read:', addr_as_text(data)
 
     readPending = False
