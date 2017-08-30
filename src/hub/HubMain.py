@@ -22,6 +22,7 @@ def do_menu():
         "1" : enableCollector,
         "2" : readAndPrint,
         "3" : disableCollector,
+        "I" : initiateRead,
         "A" : announceHub,
         "E" : echo,
         "W" : wait_for_replies,
@@ -29,7 +30,7 @@ def do_menu():
         }
 
     while True:
-        prompt1 = "1-Enable, 2-Read, 3-Disable ,A-announce, E-Echo, W-Wait for replies, Q-Quit:"
+        prompt1 = "1-Enable, 2-Read, 3-Disable , I-initiate Read, A-announce, E-Echo, W-Wait for replies, Q-Quit:"
         command = raw_input(prompt1)
         try:
             options[command.upper()]()
@@ -43,6 +44,10 @@ def wait_for_replies():
     while count > 0:
         poll_a_second()
         count = count - 1
+
+def initiateRead():
+    comm.mcastRpc(1, 2, 'initiateRead',)
+    poll_a_second()
 
 def announceHub():
     comm.mcastRpc(1, 2, 'announceHub',)
