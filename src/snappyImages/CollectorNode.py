@@ -74,6 +74,7 @@ def initMonitorAdcReady():
 
 @setHook(HOOK_GPIN)
 def pinChanged(pinNum, isSet):
+    global read_initiated
     if not read_initiated:
         return
     if pinNum == ADC_READY_PIN and isSet == ADC_READY:
