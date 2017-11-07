@@ -15,7 +15,8 @@ class HubPlatform:
             log.info("Mac")
             # SS200 USB stick on mac
             self.serial_conn = snap.SERIAL_TYPE_RS232
-            self.serial_port = '/dev/tty.SLAB_USBtoUART'
+            self.serial_port = 'SnapStick0'
+            # self.serial_port = '/dev/tty.SLAB_USBtoUART'
         elif self.platform == "win32":
             log.info("Windows")
             # SS200 USB stick on Windows
