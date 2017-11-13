@@ -42,6 +42,7 @@ def enableCollector():
 def disableCollector():
     snappyADCDisable()
     addr = rpcSourceAddr()
+    read_initiated = False
     sendAck(addr, "disableCollector", "-")
 
 ADC_READY_PIN = 30
@@ -59,7 +60,6 @@ def pinChanged(pinNum, isSet):
         return
     if pinNum == ADC_READY_PIN and isSet == ADC_READY:
         readAndPrint2()
-        read_initiated = False
 
 def readAndPrint2():
     global hub_addr
