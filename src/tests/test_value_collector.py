@@ -1,44 +1,32 @@
 import unittest
-
+from src.snappyImages.value_collector import *
 
 class ValueCollectorTest(unittest.TestCase):
     def setUp(self):
         self.addCleanup(self.unpatch)
-        init_batch()
+        value_collector_init()
 
     def unpatch(self):
         pass
 
     def test_batch_before_any_reads(self):
-        self.assertEqual("[]", get_batch_values())
+        self.assertEqual("[]", value_collector_get_batch())
 
     def test_batch_after_one_read(self):
-        put_value_in_batch('11AAFF')
-        self.assertEqual('[11AAFF]', get_batch_values())
+        value_collector_put_value('11AAFF')
+        self.assertEqual('[11AAFF]', value_collector_get_batch())
 
     def test_batch_after_two_reads(self):
-        put_value_in_batch('11AAFF')
-        put_value_in_batch('22BBEE')
-        self.assertEqual('[11AAFF 22BBEE]', get_batch_values())
+        value_collector_put_value('11AAFF')
+        value_collector_put_value('22BBEE')
+        self.assertEqual('[11AAFF 22BBEE]', value_collector_get_batch())
 
-    def test_batch_after_five_reads(self):
-        put_value_in_batch('11AAFF')
-        put_value_in_batch('22BBEE')
-        self.assertEqual('[11AAFF 22BBEE]', get_batch_values())
+    def test_batch_after_batch_size_exceeded(self):
+        value_collector_put_value('11AAFF')
+        value_collector_put_value('22BBEE')
+        value_collector_put_value('33BBEE')
+        value_collector_put_value('44BBEE')
+        value_collector_put_value('55BBEE')
+        value_collector_put_value('66BBEE')
+        self.assertEqual('[22BBEE 33BBEE 44BBEE 55BBEE 66BBEE]', value_collector_get_batch())
 
-values = ''
-
-def init_batch():
-    global values
-    values = ''
-
-
-def put_value_in_batch(value):
-    global values
-    if values == '':
-        values = value
-    else:
-        values = values + " " + value
-
-def get_batch_values():
-    return '[' + values + ']'
