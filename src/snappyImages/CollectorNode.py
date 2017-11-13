@@ -79,6 +79,9 @@ def three_bytes_as_text(addr):
 
 def readAndSend():
     data = snappySpiRead(3, 8)
-    print 'SPI read:', three_bytes_as_text(data)
-    sendAck(hub_addr, "readAndSend", three_bytes_as_text(data))
+    value = three_bytes_as_text(data)
+    value_collector_put_value(value)
+    # sendAck(hub_addr, "readAndSend", value)
+
+
 
