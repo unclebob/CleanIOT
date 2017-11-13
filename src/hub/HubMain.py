@@ -29,7 +29,7 @@ def do_menu():
         }
 
     while True:
-        prompt1 = "1-Enable, 2-Read, 3-Disable , I-initiate Read, A-announce, E-Echo, W-Wait for replies, Q-Quit:"
+        prompt1 = "1-Enable, 2-Read, 3-Disable, G-get batch, A-announce, E-Echo, W-Wait for replies, Q-Quit:"
         command = raw_input(prompt1)
         try:
             options[command.upper()]()

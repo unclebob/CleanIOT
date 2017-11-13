@@ -53,7 +53,7 @@ def readAndReport():
 
 def getBatch():
     batch = value_collector_get_batch()
-    sendAck(hub_addr, "getBatch", batch)
+    sendAck(rpcSourceAddr(), "getBatch", batch)
 
 
 # -- Helpers ---
