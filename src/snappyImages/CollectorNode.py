@@ -1,5 +1,6 @@
 from utils.binhex import hexValues3
 from utils.spi7191 import *
+from src.snappyImages.value_collector import *
 
 hub_addr = None
 reading = False
@@ -10,6 +11,7 @@ def startup():
     print "imAlive"
     snappySpiInit()
     initMonitorAdcReady()
+    value_collector_init()
     snappySpiRead(3, 8)
 
 ADC_READY_PIN = 30
@@ -48,6 +50,11 @@ def readAndReport():
     global hub_addr
     hub_addr = rpcSourceAddr()
     sendAck(hub_addr, "readAndReport", "-")
+
+def getBatch():
+    batch = value_collector_get_batch()
+    sendAck(hub_addr, "getBatch", batch)
+
 
 # -- Helpers ---
 

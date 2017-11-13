@@ -21,6 +21,7 @@ def do_menu():
         "1" : enableCollector,
         "2" : readAndReport,
         "3" : disableCollector,
+        "G" : getBatch,
         "A" : announceHub,
         "E" : echo,
         "W" : wait_for_replies,
@@ -49,6 +50,10 @@ def readAndReport():
 
 def announceHub():
     comm.mcastRpc(1, 2, 'announceHub',)
+    poll_a_second()
+
+def getBatch():
+    comm.mcastRpc(1,3, 'getBatch',)
     poll_a_second()
 
 def echo():
