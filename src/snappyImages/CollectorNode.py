@@ -2,17 +2,19 @@ from utils.binhex import hexValues3
 from utils.spi7191 import *
 
 readPending = False
+hub_addr = None
 
 @setHook(HOOK_STARTUP)
 def startup():
     global read_initiated
-    read_initiated = True
+    read_initiated = False
     global readPending
     readPending = False
     mcastRpc(1,2,"imAlive")
     print "imAlive"
     snappySpiInit()
     initMonitorAdcReady()
+    snappySpiRead(3, 8)
 
 def sendAck(addr, command, result):
     rpc(addr, "ack", command, result)
@@ -31,28 +33,6 @@ def announceHub():
 
 def three_bytes_as_text(addr):
     return hexValues3(ord(addr[0]), ord(addr[1]), ord(addr[2]))
-
-def startReading():
-    global timer
-    timer = 3
-    global reading
-    reading = True
-
-def stopReading():
-    global reading
-    reading = False
-
-@setHook(HOOK_10MS)
-def doEverySec(tick):
-    global reading
-    global timer
-    if reading:
-        if timer == 0:
-            data = snappySpiRead(3, 8)
-            print 'SPI read:', three_bytes_as_text(data)
-            timer = 3
-        else:
-            timer = timer - 1
 
 def enableCollector():
     snappyADCEnable()
