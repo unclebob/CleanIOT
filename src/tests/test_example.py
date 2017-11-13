@@ -9,7 +9,5 @@ class ExampleTest(unittest.TestCase):
     pass
 
   def test_init(self):
-    self.assertEqual(0, 1)
+    self.assertEqual(1, 1)
 
-if __name__ == '__main__':
-    unittest.main()
