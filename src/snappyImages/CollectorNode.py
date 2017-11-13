@@ -2,7 +2,7 @@ from utils.binhex import hexValues3
 from utils.spi7191 import *
 
 hub_addr = None
-read_initiated = False
+reading = False
 
 @setHook(HOOK_STARTUP)
 def startup():
@@ -22,8 +22,8 @@ def initMonitorAdcReady():
 
 @setHook(HOOK_GPIN)
 def pinChanged(pinNum, isSet):
-    global read_initiated
-    if not read_initiated:
+    global reading
+    if not reading:
         return
     if pinNum == ADC_READY_PIN and isSet == ADC_READY:
         readAndSend()
@@ -38,16 +38,16 @@ def enableCollector():
 def disableCollector():
     snappyADCDisable()
     addr = rpcSourceAddr()
-    global read_initiated
-    read_initiated = False
+    global reading
+    reading = False
     sendAck(addr, "disableCollector", "-")
 
-def initiateRead():
-    global read_initiated
-    read_initiated = True
+def readAndReport():
+    global reading
+    reading = True
     global hub_addr
     hub_addr = rpcSourceAddr()
-    sendAck(hub_addr, "readInitiated", "-")
+    sendAck(hub_addr, "readAndReport", "-")
 
 # -- Helpers ---
 

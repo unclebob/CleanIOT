@@ -19,9 +19,8 @@ def ackToHub(command, result):
 def do_menu():
     options = {
         "1" : enableCollector,
-        "2" : readAndPrint,
+        "2" : readAndReport,
         "3" : disableCollector,
-        "I" : initiateRead,
         "A" : announceHub,
         "E" : echo,
         "W" : wait_for_replies,
@@ -44,8 +43,8 @@ def wait_for_replies():
         poll_a_second()
         count = count - 1
 
-def initiateRead():
-    comm.mcastRpc(1, 2, 'initiateRead',)
+def readAndReport():
+    comm.mcastRpc(1, 2, 'readAndReport',)
     poll_a_second()
 
 def announceHub():
@@ -65,10 +64,6 @@ def enableCollector():
 
 def disableCollector():
     comm.mcastRpc(1, 2, "disableCollector")
-    poll_a_second()
-
-def readAndPrint():
-    comm.mcastRpc(1, 2, "readAndPrint")
     poll_a_second()
 
 #------- Helpers -----------
